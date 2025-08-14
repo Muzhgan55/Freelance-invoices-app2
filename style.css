@@ -1,0 +1,84 @@
+/* General font */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa; /* consistent with dashboard */
+}
+
+/* Dashboard-specific */
+.quote-card {
+  background: linear-gradient(90deg, #ffedb3, #ffe08a);
+  border-radius: 12px;
+}
+
+.stat-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+  font-weight: bold;
+}
+
+canvas {
+  max-height: 300px;
+}
+
+/* Shared Cards for Clients/Invoices */
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+}
+
+.card h5 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Forms */
+.form-control, .form-select, textarea {
+  border-radius: 0.5rem;
+  box-shadow: inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.25rem;
+}
+
+/* Tables */
+.table {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.table thead th {
+  font-weight: 600;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.table-responsive {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: inset 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+}
+
+/* Page headings */
+main h1 {
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Spacing between cards */
+main .card + .card {
+  margin-top: 1.5rem;
+}
