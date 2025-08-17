@@ -1,9 +1,10 @@
 import { loadClients, loadInvoices } from './data.js';
-import { generateId, validateClientName, validateInvoice } from './utils.js';
-import { renderClientOptions } from './render.js';
+
+//import { renderClientOptions } from './render.js';
 
 // Import JSON file with quotes
-import quotes from './quotes1.json' assert { type: 'json' };
+import {quotes} from './qoutes.js';
+console.log('Quotes loaded:', quotes);
 
 let clients = loadClients();
 let invoices = loadInvoices();
@@ -11,9 +12,8 @@ let invoices = loadInvoices();
 // Initialize Dashboard
 function initialize() {
   renderDashboardStats();
-  renderClientOptions(clients);
   loadRandomQuote();
-  renderInvoiceChart();
+  
 }
 
 // Render stats
