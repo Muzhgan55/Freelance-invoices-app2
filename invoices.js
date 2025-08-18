@@ -1,10 +1,9 @@
-// invoices.js
 import { loadInvoices, saveInvoices, loadClients } from './data.js';
 import { generateId, formatCurrency, confirmAction } from './utils.js';
 
 const invoiceForm = document.getElementById('invoice-form');
 const invoiceTableBody = document.getElementById('invoice-table-body');
-const cancelEditBtn = document.getElementById('cancel-edit');
+const cancelEditBtn = document.getElementById('cancel-invoice-edit'); // ✅ matches HTML
 const invoiceClientSelect = document.getElementById('invoice-client');
 
 let invoices = loadInvoices();
@@ -25,10 +24,9 @@ function renderInvoices() {
         return `
           <tr>
             <td>${client ? client.name : 'Unknown'}</td>
-            <td>${i.title}</td>
             <td>${formatCurrency(i.amount)}</td>
             <td>${i.date}</td>
-            <td>${i.status || 'Pending'}</td>
+            <td>${i.notes || ''}</td>   <!-- ✅ use notes -->
             <td>
               <button class="btn btn-sm btn-warning edit-btn" data-id="${i.id}">Edit</button>
               <button class="btn btn-sm btn-danger delete-btn" data-id="${i.id}">Delete</button>
@@ -36,7 +34,7 @@ function renderInvoices() {
           </tr>
         `;
       }).join('')
-    : `<tr><td colspan="6" class="text-center">No invoices yet</td></tr>`;
+    : `<tr><td colspan="5" class="text-center">No invoices yet</td></tr>`;
 
   // Attach events
   document.querySelectorAll('.edit-btn').forEach(btn => {
@@ -51,19 +49,29 @@ function renderInvoices() {
 invoiceForm.addEventListener('submit', e => {
   e.preventDefault();
   const clientId = invoiceClientSelect.value;
-  const title = document.getElementById('service-title').value.trim();
   const amount = parseFloat(document.getElementById('invoice-amount').value);
-  const description = document.getElementById('service-description').value.trim();
+  const notes = document.getElementById('invoice-notes').value.trim(); // ✅ notes instead of description
   const date = document.getElementById('invoice-date').value;
 
   if (!clientId) return alert('Please select a client.');
 
   if (editInvoiceId) {
-    invoices = invoices.map(i => i.id === editInvoiceId ? { ...i, clientId, title, amount, description, date } : i);
+    invoices = invoices.map(i =>
+      i.id === editInvoiceId
+        ? { ...i, clientId, amount, notes, date }
+        : i
+    );
     editInvoiceId = null;
     cancelEditBtn.style.display = 'none';
   } else {
-    invoices.push({ id: generateId(), clientId, title, amount, description, date, status: 'Pending' });
+    invoices.push({
+      id: generateId(),
+      clientId,
+      amount,
+      notes,
+      date,
+      status: 'Pending'
+    });
   }
 
   saveInvoices(invoices);
@@ -77,9 +85,8 @@ function startEditInvoice(id) {
   if (!invoice) return;
   editInvoiceId = id;
   invoiceClientSelect.value = invoice.clientId;
-  document.getElementById('service-title').value = invoice.title;
   document.getElementById('invoice-amount').value = invoice.amount;
-  document.getElementById('service-description').value = invoice.description;
+  document.getElementById('invoice-notes').value = invoice.notes || ''; // ✅ fixed
   document.getElementById('invoice-date').value = invoice.date;
   cancelEditBtn.style.display = 'inline-block';
 }
